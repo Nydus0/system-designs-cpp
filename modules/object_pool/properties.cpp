@@ -2,7 +2,7 @@
 // Created by Nydus0 on 21/06/2025.
 //
 
-#include "properties.h"
+#include "modules/object_pool/properties.hpp"
 
 using namespace std;
 

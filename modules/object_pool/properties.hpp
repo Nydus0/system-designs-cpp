@@ -2,8 +2,7 @@
 // Created by Nydus0 on 21/06/2025.
 //
 
-#ifndef object_pool_properties_H
-#define object_pool_properties_H
+#pragma once
 
 #include <array>
 #include <string>
@@ -18,5 +17,3 @@ private:
     std::string _name;
     std::array<std::string, 10000> _arr;
 };
-
-#endif
