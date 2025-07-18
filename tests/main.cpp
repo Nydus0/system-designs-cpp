@@ -1,5 +1,9 @@
 #include <iostream>
 
+#include "modules/auto_singleton/properties.hpp"
+#include "modules/auto_singleton/AutoSingleton.hpp"
+
+
 #include "modules/object_pool/properties.hpp"
 #include "modules/object_pool/ObjectPool.hpp"
 
@@ -12,7 +16,18 @@ using namespace std;
 
 int main() {
 
-    /*std::cout << "=== test object pool ===" << std::endl;
+    std::cout << "=== test auto singleton ===" << std::endl;
+
+    auto& service = AutoSingleton<MyService>::get();
+    service.run();
+    //optional: manually destroy early
+    AutoSingleton<MyService>::destroy();
+
+    std::cout << "=== end test auto singleton ===\n\n" << std::endl;
+
+
+
+    std::cout << "=== test object pool ===" << std::endl;
 
     size_t poolSize = 100;
     ObjectPool<string, LargeObject> objectPool(poolSize);
@@ -28,7 +43,10 @@ int main() {
     cout << " object1 has been released " << endl;
 
     cout << " object2 in pool with name " << objectPool.get(obj2->name())->name() << endl;
-    std::cout << "=== end test object pool ===\n\n" << std::endl;*/
+
+    std::cout << "=== end test object pool ===\n\n" << std::endl;
+
+
 
 
     std::cout << "=== test thread pool ===" << std::endl;
@@ -62,6 +80,7 @@ int main() {
     std::cout << "Result future3: " << future3.get() << std::endl;
 
     std::cout << "=== end test thread pool ===" << std::endl;
+
     return 0;
 }
 
