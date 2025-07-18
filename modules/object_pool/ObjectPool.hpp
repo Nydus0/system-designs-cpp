@@ -54,9 +54,8 @@ public:
         auto it = _storedObjects.find(key);
         if (it != _storedObjects.end()) {
             return it->second.get();
-        } else {
-            return nullptr;
         }
+        return nullptr;
     }
 
     std::vector<T *> getObjects() {
