@@ -2,9 +2,9 @@
 // Created by Nydus0 on 19/07/2025.
 //
 
-#include <gtest/gtest.h>
-
 #include "modules/object_pool/ObjectPool.hpp"
+
+#include <gtest/gtest.h>
 
 constexpr size_t poolSize = 100;
 

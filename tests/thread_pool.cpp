@@ -2,11 +2,11 @@
 // Created by Nydus0 on 19/07/2025.
 //
 
-#include <gtest/gtest.h>
-
 #include "modules/thread_pool/ThreadPool.hpp"
 #include "modules/thread_pool/pool_manager/PoolManager.hpp"
 #include "modules/thread_pool/pool_manager/PoolRequest.hpp"
+
+#include <gtest/gtest.h>
 
 int print_sum(const int a, const int b) { return a + b; }
 int add(const int a, const int b) { return a + b; }

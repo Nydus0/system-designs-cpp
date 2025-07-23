@@ -2,9 +2,9 @@
 // Created by Nydus0 on 19/07/2025.
 //
 
-#include <gtest/gtest.h>
-
 #include "modules/auto_singleton/AutoSingleton.hpp"
+
+#include <gtest/gtest.h>
 
 class MyService {
 public:

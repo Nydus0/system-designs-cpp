@@ -11,6 +11,9 @@ Describes several implementations of c++ patterns with specific custom features.
   * RAII with unique_ptr
   * concept guard for pool elements (elements must have a reset() function)
 
+- Safe containers:
+  * thread safe containers with read and write locked methods (vector)
+
 - Thread pool:
   * pool manager assigns pool requests to threadpools, depending on pool type
   * thread pool receives functions and arguments separately and binds them to execute its task

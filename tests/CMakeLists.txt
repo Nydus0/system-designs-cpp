@@ -13,7 +13,8 @@ FetchContent_MakeAvailable(googletest)
 add_executable(tests
         auto_singleton.cpp
         object_pool.cpp
-        thread_pool.cpp)
+        thread_pool.cpp
+        safe_containers.cpp)
 
 # link with library and GTest
 target_link_libraries(tests
