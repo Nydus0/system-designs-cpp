@@ -7,6 +7,8 @@
 #include <gtest/gtest.h>
 #include <string>
 
+#include "modules/safe_containers/fifo.hpp"
+
 class Object {
 public:
     explicit Object(std::string name) : _name(move(name)) {}
@@ -47,6 +49,21 @@ TEST(safe_containers, vector) {
     vec_Object.clear();
     EXPECT_EQ(vec_Object.size(), 0);
     EXPECT_EQ(vec_Object.empty(), true);
+}
+
+TEST(safe_containers, fifo) {
+
+    Object obj1("obj1"); Object obj2("obj2"); Object obj3("obj3");
+
+    safe::fifo<int> fifo1;
+    safe::fifo<Object> fifo2;
+
+    //push
+    fifo1.push(1); fifo1.push(2); fifo1.push(3);
+    fifo2.push(obj1);  fifo2.push(obj2);  fifo2.push(obj3);
+    EXPECT_EQ(fifo1.size(), 3); EXPECT_EQ(fifo2.size(), 3);
+    //front
+    EXPECT_EQ(fifo1.front(), 1);
 }
 
 
