@@ -28,6 +28,10 @@ namespace safe {
             std::shared_lock lock(_mutex);
             return _data[index];
         }
+        T& at(size_t index) {
+            std::shared_lock lock(_mutex);
+            return _data.at(index);
+        }
         size_t size() const { std::shared_lock lock(_mutex); return _data.size(); }
         bool empty() const { std::shared_lock lock(_mutex); return _data.empty(); }
 

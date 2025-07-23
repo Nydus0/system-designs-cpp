@@ -37,6 +37,9 @@ TEST(safe_containers, vector) {
     EXPECT_EQ(vec_int[0], 1); EXPECT_EQ(vec_int[1], 2); EXPECT_EQ(vec_int[2], 3);
     //erase
     EXPECT_EQ(vec_Object[0].name(), obj1.name()); EXPECT_EQ(vec_Object[1].name(), obj3.name());
+    //at
+    EXPECT_EQ(vec_int.at(0), 1);
+    EXPECT_THROW(vec_Object.at(3), std::out_of_range);
     //size
     EXPECT_EQ(vec_vec_int.size(), 2);
     //clear & empty
@@ -44,7 +47,6 @@ TEST(safe_containers, vector) {
     vec_Object.clear();
     EXPECT_EQ(vec_Object.size(), 0);
     EXPECT_EQ(vec_Object.empty(), true);
-
 }
 
 
