@@ -6,5 +6,5 @@ add_library(modules STATIC
         thread_pool/ThreadPool.cpp
 
         #safe_containers
-        safe_containers/fifo.hpp
-        safe_containers/vector.hpp)
+        thread_safe_containers/fifo.hpp
+        thread_safe_containers/vector.hpp)

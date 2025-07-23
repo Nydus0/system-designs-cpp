@@ -2,12 +2,11 @@
 // Created by Nydus0 on 23/07/2025.
 //
 
-#include "modules/safe_containers/vector.hpp"
+#include "modules/thread_safe_containers/vector.hpp"
+#include "modules/thread_safe_containers/fifo.hpp"
 
 #include <gtest/gtest.h>
 #include <string>
-
-#include "modules/safe_containers/fifo.hpp"
 
 class Object {
 public:
@@ -20,7 +19,7 @@ private:
     std::array<std::string, 10000> _arr;
 };
 
-TEST(safe_containers, vector) {
+TEST(thread_safe_containers, vector) {
 
     Object obj1("obj1"); Object obj2("obj2"); Object obj3("obj3");
     std::vector int_list {0,1,2,3};
@@ -51,7 +50,7 @@ TEST(safe_containers, vector) {
     EXPECT_EQ(vec_Object.empty(), true);
 }
 
-TEST(safe_containers, fifo) {
+TEST(thread_safe_containers, fifo) {
 
     Object obj1("obj1"); Object obj2("obj2"); Object obj3("obj3");
 
