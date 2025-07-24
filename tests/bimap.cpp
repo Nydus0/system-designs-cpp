@@ -30,7 +30,17 @@ TEST (bimap, clear) {
     map.insert("obj2", 2);
     map.insert("obj3", 3);
     map.clear();
-    EXPECT_EQ(map.size(), 0);
+}
+
+TEST (bimap, empty) {
+    BiMap<std::string, int> map;
+    EXPECT_EQ(map.empty(), true);
+    map.insert("obj1", 1);
+    EXPECT_EQ(map.empty(), false);
+    map.insert("obj2", 2);
+    EXPECT_EQ(map.empty(), false);
+    map.clear();
+    EXPECT_EQ(map.empty(), true);
 }
 
 TEST (bimap, getMatch) {

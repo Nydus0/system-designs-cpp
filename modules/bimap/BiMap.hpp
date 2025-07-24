@@ -6,8 +6,6 @@
 
 #include <map>
 
-#include <iostream>
-
 template <typename Key, typename Value>
 requires std::totally_ordered<Key> && std::totally_ordered<Value>
 class BiMap {
