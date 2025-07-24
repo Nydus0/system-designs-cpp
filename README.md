@@ -6,19 +6,23 @@ Describes several implementations of c++ patterns with specific custom features.
   * singleton class in modern c++ style
   * provides an optional manual deletion of the singleton class 
 
+- BiMap:
+  * ensure 1 to 1 key/value
+  * O(log(N)) search from keys and values
+  * O(log(N)) removals
+
 - Object pool:
   * fast pool element access by key
   * RAII with unique_ptr
   * concept guard for pool elements (elements must have a reset() function)
 
-- Thread safe containers:
-  * vector : stores data with read/write locks methods
-  * fifo : implements a queue with a wait mechanism
-
 - Thread pool:
   * pool manager assigns pool requests to threadpools, depending on pool type
   * thread pool receives functions and arguments separately and binds them to execute its task
 
+- Thread safe containers:
+  * vector : stores data with read/write locks methods
+  * fifo : implements a queue with a wait mechanism
 
 
 ## Build Instructions

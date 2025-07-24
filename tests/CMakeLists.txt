@@ -12,6 +12,7 @@ FetchContent_MakeAvailable(googletest)
 # create test executable
 add_executable(tests
         auto_singleton.cpp
+        bimap.cpp
         object_pool.cpp
         thread_pool.cpp
         thread_safe_containers.cpp)

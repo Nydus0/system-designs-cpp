@@ -7,4 +7,5 @@ add_library(modules STATIC
 
         #safe_containers
         thread_safe_containers/fifo.hpp
-        thread_safe_containers/vector.hpp)
+        thread_safe_containers/vector.hpp
+        bimap/BiMap.hpp)
