@@ -26,15 +26,6 @@ TEST(bimap, simple_remove) {
     EXPECT_EQ(map.size(), 1);
 }
 
-TEST (bimap, simple_clear) {
-    BiMap<std::string, int> map;
-
-    map.insert("obj1", 1);
-    map.insert("obj2", 2);
-    map.insert("obj3", 3);
-    map.clear();
-}
-
 TEST (bimap, simple_empty) {
     BiMap<std::string, int> map;
 

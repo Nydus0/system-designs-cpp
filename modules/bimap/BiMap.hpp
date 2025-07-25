@@ -136,6 +136,11 @@ public:
         }
     }
 
+    void clear() {
+        _originMap.clear();
+        _reverseMap.clear();
+    }
+
     auto get_match_equal_range(const Key& key) { return _originMap.equal_range(key); }
     auto get_match_equal_range(const Value& value) { return _reverseMap.equal_range(value); }
 
