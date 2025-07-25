@@ -7,9 +7,14 @@ Describes several implementations of c++ patterns with specific custom features.
   * provides an optional manual deletion of the singleton class 
 
 - BiMap:
-  * ensure 1 to 1 key/value
-  * O(log(N)) search from keys and values
-  * O(log(N)) removals
+  * simple bimap
+    * ensure 1 to 1 key/value
+    * O(log(N)) search for keys and values
+    * O(log(N)) removals
+  * multi bimap : 
+    * allow multiple keys and multiple values
+    * O(log(N)) search for keys and values
+    * removals are longer (logarithmic search then loop on the several matches)
 
 - Object pool:
   * fast pool element access by key
