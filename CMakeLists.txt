@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.31)
-project(design_patterns_cpp)
+project(system_designs_cpp)
 
 set(CMAKE_CXX_STANDARD 26)
 

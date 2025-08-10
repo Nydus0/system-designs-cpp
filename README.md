@@ -1,4 +1,4 @@
-# design-patterns-cpp
+# system-designs-cpp
 
 Describes several implementations of c++ patterns with specific custom features.
 
