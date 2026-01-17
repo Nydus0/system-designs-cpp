@@ -3,10 +3,17 @@
 //
 
 #include "modules/constexpr_factory/Type1.hpp"
+#include "modules/constexpr_factory/Type2.hpp"
 #include "modules/constexpr_factory/Definitions.hpp"
 
 template <>
-void Type1<ImplType::LIB2>::foo() const
+void Type1<ImplType::LIB2>::foo1() const
 {
     std::cout << "foo type1 lib 2" << std::endl;
+}
+
+template <>
+void Type2<ImplType::LIB2>::foo2() const
+{
+    std::cout << "foo type 2 lib 2" << std::endl;
 }

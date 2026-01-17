@@ -7,6 +7,9 @@
 #include <gtest/gtest.h>
 
 TEST(factory, creation) {
-    auto service = Service<TYPE1>();
-    service->foo();
+    auto service1 = Service<TYPE1>();
+    service1->foo1();
+
+    auto service2 = Service<TYPE2>();
+    service2->foo2();
 }

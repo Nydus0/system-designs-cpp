@@ -9,5 +9,5 @@
 template <ImplType Impl_t> class Type2 {
 
 public:
-    void foo() const;
+    void foo2() const;
 };
