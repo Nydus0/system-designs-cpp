@@ -13,6 +13,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(tests
         auto_singleton.cpp
         bimap.cpp
+        constexpr_factory.cpp
         object_pool.cpp
         thread_pool.cpp
         thread_safe_containers.cpp)
