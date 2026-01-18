@@ -11,7 +11,7 @@
 template <ServiceType> class Service {};
 
 // generic base template
-template <typename T> class ServiceImpl {
+template <typename T> class ServiceModel {
 protected:
     T _instance{};
 public:
@@ -21,9 +21,9 @@ public:
 };
 
 // add new types here
-template <> class Service<TYPE1> : public ServiceImpl<Type1<CURR_IMPL>> {};
-template <> class Service<TYPE2> : public ServiceImpl<Type2<CURR_IMPL>> {};
-template <> class Service<TYPE3> : public ServiceImpl<Type3<CURR_IMPL>> {};
+template <> class Service<TYPE1> : public ServiceModel<Type1<CURR_IMPL>> {};
+template <> class Service<TYPE2> : public ServiceModel<Type2<CURR_IMPL>> {};
+template <> class Service<TYPE3> : public ServiceModel<Type3<CURR_IMPL>> {};
 
 
 
