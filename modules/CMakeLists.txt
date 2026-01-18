@@ -11,6 +11,6 @@ add_library(modules STATIC
         bimap/BiMap.hpp
 
         #constexpr factory
-        constexpr_factory/Factory.hpp
-        constexpr_factory/implementations/Lib1.cpp
-        constexpr_factory/implementations/Lib2.cpp)
+        static_factory/Factory.hpp
+        static_factory/implementations/Lib1.cpp
+        static_factory/implementations/Lib2.cpp)

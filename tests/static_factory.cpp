@@ -2,7 +2,7 @@
 // Created by Nydus0 on 17/01/2026.
 //
 
-#include "modules/constexpr_factory/Factory.hpp"
+#include "modules/static_factory/Factory.hpp"
 
 #include <gtest/gtest.h>
 

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "modules/constexpr_factory/Definitions.hpp"
+#include "modules/static_factory/Definitions.hpp"
 
 template <ImplType> class Type2 {
 

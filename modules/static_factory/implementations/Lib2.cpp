@@ -2,9 +2,8 @@
 // Created by Nydus0 on 17/01/2026.
 //
 
-#include "modules/constexpr_factory/services/Type1.hpp"
-#include "modules/constexpr_factory/services/Type2.hpp"
-#include "modules/constexpr_factory/Definitions.hpp"
+#include "modules/static_factory/services/Type1.hpp"
+#include "modules/static_factory/services/Type2.hpp"
 
 template <>
 void Type1<ImplType::LIB2>::foo1() const
