@@ -12,7 +12,5 @@ add_library(modules STATIC
 
         #constexpr factory
         constexpr_factory/Factory.hpp
-        constexpr_factory/Type1.hpp
-        constexpr_factory/Definitions.hpp
         constexpr_factory/implementations/Lib1.cpp
         constexpr_factory/implementations/Lib2.cpp)

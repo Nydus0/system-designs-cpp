@@ -12,4 +12,7 @@ TEST(factory, creation) {
 
     auto service2 = Service<TYPE2>();
     service2->foo2();
+
+    auto service3 = Service<TYPE3>();
+    service3->foo3();
 }

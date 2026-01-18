@@ -6,7 +6,7 @@
 
 #include "modules/constexpr_factory/Definitions.hpp"
 
-template <ImplType Impl_t> class Type3 {
+template <ImplType> class Type3 {
 
 public:
     void foo3() const;

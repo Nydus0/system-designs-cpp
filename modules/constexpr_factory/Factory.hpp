@@ -4,10 +4,9 @@
 
 #pragma once
 
-#include "modules/constexpr_factory/Definitions.hpp"
-#include "modules/constexpr_factory/Type1.hpp"
-#include "modules/constexpr_factory/Type2.hpp"
-#include "modules/constexpr_factory/Type3.hpp"
+#include "modules/constexpr_factory/services/Type1.hpp"
+#include "modules/constexpr_factory/services/Type2.hpp"
+#include "modules/constexpr_factory/services/Type3.hpp"
 
 template <ServiceType> class Service {}; //forward declaration
 
