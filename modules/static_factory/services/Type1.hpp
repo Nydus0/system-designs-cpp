@@ -4,10 +4,13 @@
 
 #pragma once
 
-#include "modules/static_factory/Definitions.hpp"
+#include "modules/static_factory/Factory.hpp"
 
 template <ImplType> class Type1 {
 
 public:
     void foo1() const;
 };
+
+constexpr ServiceType TYPE1 = ServiceType::TYPE1;
+template <> class Service<TYPE1> : public ServiceModel<Type1<CURR_IMPL>> {};

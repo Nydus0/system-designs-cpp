@@ -4,9 +4,7 @@
 
 #pragma once
 
-#include "modules/static_factory/services/Type1.hpp"
-#include "modules/static_factory/services/Type2.hpp"
-#include "modules/static_factory/services/Type3.hpp"
+#include "modules/static_factory/Definitions.hpp"
 
 template <ServiceType> class Service {};
 
@@ -19,11 +17,6 @@ public:
         return &_instance;
     }
 };
-
-// add new types here
-template <> class Service<TYPE1> : public ServiceModel<Type1<CURR_IMPL>> {};
-template <> class Service<TYPE2> : public ServiceModel<Type2<CURR_IMPL>> {};
-template <> class Service<TYPE3> : public ServiceModel<Type3<CURR_IMPL>> {};
 
 
 
