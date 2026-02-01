@@ -40,4 +40,4 @@ namespace safe {
         std::vector<T> _data;
     };
 
-} // namespace safe
+}

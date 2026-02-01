@@ -54,4 +54,4 @@ namespace safe {
         std::queue<T> _queue;
     };
 
-} // namespace safe
+}
