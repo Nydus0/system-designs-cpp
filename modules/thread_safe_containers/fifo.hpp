@@ -14,8 +14,10 @@ namespace safe {
     public:
 
         template<typename U> void push(U&& value) {
-            std::lock_guard lock(_mutex);
-            _queue.push(std::forward<U>(value));
+            {
+                std::lock_guard lock(_mutex);
+                _queue.push(std::forward<U>(value));
+            }
             _condition.notify_one();
         }
 
@@ -45,7 +47,13 @@ namespace safe {
         }
 
         size_t size() const {
+            std::lock_guard lock(_mutex);
             return _queue.size();
+        }
+
+        void clear() {
+            std::lock_guard lock(_mutex);
+            _queue.clear();
         }
 
     private:
