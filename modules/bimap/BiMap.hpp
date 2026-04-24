@@ -18,137 +18,147 @@ class BiMap<Key, Value, Simple> {
 
 public:
     void insert(const Key& key, const Value& value) {
-        auto it = _originMap.find(key);
-        auto it2 = _reverseMap.find(value);
+        auto it = _forward.find(key);
+        auto it2 = _reverse.find(value);
 
-        const bool key_exists = it != _originMap.end();
-        const bool value_exists = it2 != _reverseMap.end();
+        const bool key_exists = it != _forward.end();
+        const bool value_exists = it2 != _reverse.end();
 
-        if (key_exists && value_exists) {
-            //do nothing
-        } else if (key_exists) {
-            _reverseMap.erase(it->second);
-            _originMap[key] = value;
-        } else if (value_exists) {
-            _originMap.erase(it2->second);
-            _reverseMap[value] = key;
-        } else {
-            _originMap[key] = value;
-            _reverseMap[value] = key;
-        }
+        // remove old links if they exist
+        if (key_exists) { _reverse.erase(it->second); }
+        if (value_exists) { _forward.erase(it2->second); }
+
+        // insert new links
+        _forward[key] = value;
+        _reverse[value] = key;
     }
 
     void remove(const Key& key) {
-        auto it = _originMap.find(key);
-        if (it != _originMap.end()) {
-            _reverseMap.erase(it->second);
+        auto it = _forward.find(key);
+        if (it != _forward.end()) {
+            _reverse.erase(it->second);
         }
-        _originMap.erase(key);
+        _forward.erase(key);
     }
 
     void remove(const Value& value) {
-        auto it = _reverseMap.find(value);
-        if (it != _reverseMap.end()) {
-            _originMap.erase(it->second);
+        auto it = _reverse.find(value);
+        if (it != _reverse.end()) {
+            _forward.erase(it->second);
         }
-        _reverseMap.erase(value);
+        _reverse.erase(value);
     }
 
     void clear() {
-        _originMap.clear();
-        _reverseMap.clear();
+        _forward.clear();
+        _reverse.clear();
     }
 
-    Value get_match(const Key& key) { return _originMap.at(key); }
-    Key get_match(const Value& value) { return _reverseMap.at(value); }
+    Value get_match(const Key& key) { return _forward.at(key); }
+    Key get_match(const Value& value) { return _reverse.at(value); }
 
-    bool empty() { return _originMap.empty(); }
-    size_t size() { return _originMap.size(); }
+    bool empty() { return _forward.empty(); }
+    size_t size() { return _forward.size(); }
 
 private:
-    std::map<Key, Value> _originMap;
-    std::map<Value, Key> _reverseMap;
+    std::map<Key, Value> _forward;
+    std::map<Value, Key> _reverse;
 };
 
 template <typename Key, typename Value>
 class BiMap<Key, Value, Multi> {
 public:
     void insert(const Key& key, const Value& value) {
-        auto it = _originMap.find(key);
-        auto it2 = _reverseMap.find(value);
+        // Check if the exact (key, value) pair already exists in _forward
+        auto range = _forward.equal_range(key);
+        bool pair_exists = false;
+        for (auto it = range.first; it != range.second; ++it) {
+            if (it->second == value) {
+                pair_exists = true;
+                break;
+            }
+        }
 
-        const bool key_exists = it != _originMap.end();
-        const bool value_exists = it2 != _reverseMap.end();
-
-        if (key_exists && value_exists) {
-            //do nothing
-        } else {
-            _originMap.insert({key, value});
-            _reverseMap.insert({value, key});
+        // if the pair does not exist, insert it into both maps
+        if (!pair_exists) {
+            _forward.insert({key, value});
+            _reverse.insert({value, key});
         }
     }
 
     void remove(const Key &key) {
-        auto range = _originMap.equal_range(key);
-        for (auto [it, end_range] = _originMap.equal_range(key);
-             it != end_range; ++it) {
-            auto range2 = _reverseMap.equal_range(it->second);
-            auto it2 = std::find_if(range2.first, range2.second, [&](const auto &pair) {
-                return pair.second == key;
-            });
-            if (it2 != range2.second) {
-                _reverseMap.erase(it2);/**/
+        auto [begin, end] = _forward.equal_range(key);
+        for (auto it = begin; it != end; ++it) {
+            // remove the corresponding (value, key) pair from _reverse
+            auto [begin2, end2] = _reverse.equal_range(it->second);
+            auto it2 = std::find_if(
+                begin2,
+                end2,
+                [&key](const auto &pair) { return pair.second == key; }
+            );
+            if (it2 != end2) {
+                _reverse.erase(it2);
             }
         }
-        _originMap.erase(key);
+        // remove all (key, value) pairs from _forward
+        _forward.erase(begin, end);
     }
 
     void remove(const Value &value) {
-        auto range = _reverseMap.equal_range(value);
-        for (auto [it, end_range] = _reverseMap.equal_range(value);
-             it != end_range; ++it) {
-            auto range2 = _originMap.equal_range(it->second);
-            auto it2 = std::find_if(range2.first, range2.second, [&](const auto &pair) {
-                return pair.second == value;
-            });
-            if (it2 != range2.second) {
-                _originMap.erase(it2);
+        auto [begin, end] = _reverse.equal_range(value);
+        for (auto it = begin; it != end; ++it) {
+            // remove the corresponding (key, value) pair from _forward
+            auto [begin2, end2] = _forward.equal_range(it->second);
+            auto it2 = std::find_if(
+                begin2,
+                end2,
+                [&value](const auto &pair) { return pair.second == value; }
+            );
+            if (it2 != end2) {
+                _forward.erase(it2);
             }
         }
-        _reverseMap.erase(value);
+        // remove all (value, key) pairs from _reverse
+        _reverse.erase(begin, end);
     }
 
     void remove(const Key &key, const Value &value) {
-        auto range = _originMap.equal_range(key);
-        auto it = std::find_if(range.first, range.second, [&](const auto &pair) {
-            return pair.second == value;
-        });
-        if (it != range.second) {
-            _originMap.erase(it);
+        // remove (key, value) from _forward
+        auto [begin, end] = _forward.equal_range(key);
+        auto it = std::find_if(
+            begin,
+            end,
+            [&value](const auto &pair) { return pair.second == value; }
+        );
+        if (it != end) {
+            _forward.erase(it);
         }
 
-        auto range2 = _reverseMap.equal_range(value);
-        auto it2 = std::find_if(range2.first, range2.second, [&](const auto &pair) {
-            return pair.second == key;
-        });
-        if (it2 != range2.second) {
-            _reverseMap.erase(it2);
+        // remove (value, key) from _reverse
+        auto [begin2, end2] = _reverse.equal_range(value);
+        auto it2 = std::find_if(
+            begin2,
+            end2,
+            [&key](const auto &pair) { return pair.second == key; }
+        );
+        if (it2 != end2) {
+            _reverse.erase(it2);
         }
     }
 
     void clear() {
-        _originMap.clear();
-        _reverseMap.clear();
+        _forward.clear();
+        _reverse.clear();
     }
 
-    auto get_match_equal_range(const Key& key) { return _originMap.equal_range(key); }
-    auto get_match_equal_range(const Value& value) { return _reverseMap.equal_range(value); }
+    auto get_match_equal_range(const Key& key) { return _forward.equal_range(key); }
+    auto get_match_equal_range(const Value& value) { return _reverse.equal_range(value); }
 
-    bool empty() { return _originMap.empty(); }
-    size_t size() { return _originMap.size(); }
+    bool empty() { return _forward.empty(); }
+    size_t size() { return _forward.size(); }
 
 private:
-    std::multimap<Key, Value> _originMap;
-    std::multimap<Value, Key> _reverseMap;
+    std::multimap<Key, Value> _forward;
+    std::multimap<Value, Key> _reverse;
 
 };
