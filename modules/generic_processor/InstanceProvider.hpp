@@ -13,32 +13,32 @@ concept EnumType = std::is_enum_v<T>;
 
 //model
 template <EnumType Enum,
-    template <typename> class Concept,
+    template <typename> class Base,
     template <typename, auto> class Spec>
-class ProcessorRegistry {
+class InstanceProvider {
 public:
-    virtual ~ProcessorRegistry() = default;
+    virtual ~InstanceProvider() = default;
 
     template <Enum... Values>
-    requires ((std::derived_from<Spec<Enum, Values>, Concept<Enum>>
+    requires ((std::derived_from<Spec<Enum, Values>, Base<Enum>>
         && std::default_initializable<Spec<Enum, Values>>)
         && ...)
-    void addProcessor() {
-        (processors.emplace(
+    void addInstance() {
+        (instances.emplace(
             Values,
             std::make_unique<Spec<Enum, Values>>()
         ), ...);
     }
 
-    [[nodiscard]] Concept<Enum>* getProcessor(Enum value) {
-        auto it = processors.find(value);
-        if (it == processors.end()) {
+    [[nodiscard]] Base<Enum>* getInstance(Enum value) {
+        auto it = instances.find(value);
+        if (it == instances.end()) {
             return nullptr;
         }
         return it->second.get();
     }
 
 private:
-    std::map<Enum, std::unique_ptr<Concept<Enum>>> processors;
+    std::map<Enum, std::unique_ptr<Base<Enum>>> instances;
 
 };

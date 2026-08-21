@@ -17,7 +17,7 @@ add_executable(tests
         static_factory.cpp
         thread_pool.cpp
         thread_safe_containers.cpp
-        generic_processor.cpp)
+        instance_provider.cpp)
 
 # link with library and GTest
 target_link_libraries(tests

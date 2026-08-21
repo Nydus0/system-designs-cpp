@@ -20,4 +20,4 @@ add_library(modules STATIC
         static_factory/Factory.hpp
 
         #generic processor
-        generic_processor/GenericProcessor.hpp)
+        generic_processor/InstanceProvider.hpp)

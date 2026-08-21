@@ -2,7 +2,7 @@
 // Created by Nydus0 on 21/08/2026.
 //
 
-#include "modules/generic_processor/GenericProcessor.hpp"
+#include "modules/generic_processor/InstanceProvider.hpp"
 
 #include <gtest/gtest.h>
 
@@ -28,14 +28,14 @@ enum class Color {
     COLOR_E
 };
 
-TEST(generic_processor, create_model) {
+TEST(generic_processor, create_provider) {
 
-    ProcessorRegistry<Color, ProcessorConcept, ProcessorSpec> registry;
-    registry.addProcessor<Color::COLOR_A>();
-    registry.addProcessor<Color::COLOR_C>();
-    registry.addProcessor<Color::COLOR_D, Color::COLOR_E>();
+    InstanceProvider<Color, ProcessorConcept, ProcessorSpec> processors;
+    processors.addInstance<Color::COLOR_A>();
+    processors.addInstance<Color::COLOR_C>();
+    processors.addInstance<Color::COLOR_D, Color::COLOR_E>();
 
-    auto* proc = registry.getProcessor(Color::COLOR_A);
+    auto* proc = processors.getInstance(Color::COLOR_A);
 
     ASSERT_NE(proc, nullptr);
     proc->process();
