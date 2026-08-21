@@ -7,57 +7,51 @@
 #include <memory>
 #include <map>
 
-template <typename Enum> class ProcessorConcept {
-public:
-    virtual ~ProcessorConcept() = default;
-    virtual void process() = 0;
-};
-
-template <typename Enum, Enum Value>
-class ProcessorSpec : public ProcessorConcept<Enum> {
-public:
-    void process() override {
-        // Value is available at compile time
-    }
-};
-
-template <typename Enum> class ProcessorRegistry {
+template <
+    typename Enum,
+    template <typename> class Concept,
+    template <typename, Enum> class Spec
+> class ProcessorRegistry {
 public:
     virtual ~ProcessorRegistry() = default;
 
-    template <Enum... Values> void addProcessor();
-    ProcessorConcept<Enum>* getProcessor(Enum value);
+    template <Enum... Values>
+    void addProcessor() {
+        (processors.emplace(
+            Values,
+            std::make_unique<Spec<Enum, Values>>()
+        ), ...);
+    }
+
+    [[nodiscard]] Concept<Enum>* getProcessor(Enum value) {
+        auto it = processors.find(value);
+        if (it == processors.end()) {
+            return nullptr;
+        }
+        return it->second.get();
+    }
 
 private:
-    std::map<Enum, std::unique_ptr<ProcessorConcept<Enum>>> processors;
+    std::map<Enum, std::unique_ptr<Concept<Enum>>> processors;
 
 };
 
-template <typename Enum>
-template <Enum... Values>
-void ProcessorRegistry<Enum>::addProcessor() {
-    (processors.emplace(
-        Values,
-        std::make_unique<ProcessorSpec<Enum, Values>>()
-    ), ...);
-}
-
-template <typename Enum>
-[[nodiscard]] ProcessorConcept<Enum>* ProcessorRegistry<Enum>::getProcessor(Enum value) {
-    auto it = processors.find(value);
-    if (it == processors.end()) {
-        return nullptr;
-    }
-    return it->second.get();
-}
-
-template <typename Enum, Enum... Values>
+template <
+    typename Enum,
+    template <typename> class Concept,
+    template <typename, Enum> class Spec,
+    Enum... Values
+>
 class ProcessorModel {
 public:
-    ProcessorModel() {
-        registry.template addProcessor<Values...>();
+    ProcessorModel() { registry.template addProcessor<Values...>(); }
+
+    [[nodiscard]]
+    Concept<Enum>* getProcessor(Enum value)
+    {
+        return registry.getProcessor(value);
     }
 
 private:
-    ProcessorRegistry<Enum> registry;
+    ProcessorRegistry<Enum, Concept, Spec> registry;
 };

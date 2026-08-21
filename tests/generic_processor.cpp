@@ -6,6 +6,20 @@
 
 #include <gtest/gtest.h>
 
+template <typename Enum> class ProcessorConcept {
+public:
+    virtual ~ProcessorConcept() = default;
+    virtual void process() = 0;
+};
+
+template <typename Enum, Enum Value>
+class ProcessorSpec : public ProcessorConcept<Enum> {
+public:
+    void process() override {
+        // Value is available at compile time
+    }
+};
+
 enum class Color {
     COLOR_A,
     COLOR_B,
@@ -14,19 +28,19 @@ enum class Color {
 
 using ColorModel = ProcessorModel<
     Color,
+    ProcessorConcept,
+    ProcessorSpec,
     Color::COLOR_A,
     Color::COLOR_B,
     Color::COLOR_C
 >;
 
-ColorModel model;
-
 TEST(generic_processor, create_model) {
-    ProcessorRegistry<Color> registry;
+    ProcessorRegistry<Color, ProcessorConcept, ProcessorSpec> registry;
     registry.addProcessor<Color::COLOR_A>();
     registry.addProcessor<Color::COLOR_C>();
 
-    auto proc = registry.getProcessor(Color::COLOR_A);
+    const auto proc = registry.getProcessor(Color::COLOR_A);
     proc->process();
 
 }
