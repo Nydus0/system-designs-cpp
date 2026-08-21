@@ -17,4 +17,7 @@ add_library(modules STATIC
         static_factory/services/Type2.hpp
         static_factory/services/Type3.hpp
         static_factory/Definitions.hpp
-        static_factory/Factory.hpp)
+        static_factory/Factory.hpp
+
+        #generic processor
+        generic_processor/GenericProcessor.hpp)
