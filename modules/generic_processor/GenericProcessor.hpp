@@ -7,20 +7,9 @@
 #include <memory>
 #include <map>
 
-// --------------------------------------------------
-// Rules
-// --------------------------------------------------
-
+//rule
 template <typename T>
 concept EnumType = std::is_enum_v<T>;
-
-template <typename Spec, typename Concept>
-concept Derivation =
-    std::derived_from<Spec, Concept>;
-
-template <typename T>
-concept DefaultConstructible =
-    std::default_initializable<T>;
 
 //model
 template <EnumType Enum,
@@ -31,8 +20,8 @@ public:
     virtual ~ProcessorRegistry() = default;
 
     template <Enum... Values>
-    requires ((Derivation<Spec<Enum, Values>, Concept<Enum>>
-        && DefaultConstructible<Spec<Enum, Values>>)
+    requires ((std::derived_from<Spec<Enum, Values>, Concept<Enum>>
+        && std::default_initializable<Spec<Enum, Values>>)
         && ...)
     void addProcessor() {
         (processors.emplace(
