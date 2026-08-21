@@ -23,24 +23,21 @@ public:
 enum class Color {
     COLOR_A,
     COLOR_B,
-    COLOR_C
+    COLOR_C,
+    COLOR_D,
+    COLOR_E
 };
 
-using ColorModel = ProcessorModel<
-    Color,
-    ProcessorConcept,
-    ProcessorSpec,
-    Color::COLOR_A,
-    Color::COLOR_B,
-    Color::COLOR_C
->;
-
 TEST(generic_processor, create_model) {
+
     ProcessorRegistry<Color, ProcessorConcept, ProcessorSpec> registry;
     registry.addProcessor<Color::COLOR_A>();
     registry.addProcessor<Color::COLOR_C>();
+    registry.addProcessor<Color::COLOR_D, Color::COLOR_E>();
 
-    const auto proc = registry.getProcessor(Color::COLOR_A);
+    auto* proc = registry.getProcessor(Color::COLOR_A);
+
+    ASSERT_NE(proc, nullptr);
     proc->process();
 
 }

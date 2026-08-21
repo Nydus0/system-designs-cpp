@@ -7,15 +7,33 @@
 #include <memory>
 #include <map>
 
-template <
-    typename Enum,
+// --------------------------------------------------
+// Rules
+// --------------------------------------------------
+
+template <typename T>
+concept EnumType = std::is_enum_v<T>;
+
+template <typename Spec, typename Concept>
+concept Derivation =
+    std::derived_from<Spec, Concept>;
+
+template <typename T>
+concept DefaultConstructible =
+    std::default_initializable<T>;
+
+//model
+template <EnumType Enum,
     template <typename> class Concept,
-    template <typename, Enum> class Spec
-> class ProcessorRegistry {
+    template <typename, auto> class Spec>
+class ProcessorRegistry {
 public:
     virtual ~ProcessorRegistry() = default;
 
     template <Enum... Values>
+    requires ((Derivation<Spec<Enum, Values>, Concept<Enum>>
+        && DefaultConstructible<Spec<Enum, Values>>)
+        && ...)
     void addProcessor() {
         (processors.emplace(
             Values,
@@ -34,24 +52,4 @@ public:
 private:
     std::map<Enum, std::unique_ptr<Concept<Enum>>> processors;
 
-};
-
-template <
-    typename Enum,
-    template <typename> class Concept,
-    template <typename, Enum> class Spec,
-    Enum... Values
->
-class ProcessorModel {
-public:
-    ProcessorModel() { registry.template addProcessor<Values...>(); }
-
-    [[nodiscard]]
-    Concept<Enum>* getProcessor(Enum value)
-    {
-        return registry.getProcessor(value);
-    }
-
-private:
-    ProcessorRegistry<Enum, Concept, Spec> registry;
 };
