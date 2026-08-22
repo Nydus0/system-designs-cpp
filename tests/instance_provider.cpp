@@ -6,18 +6,16 @@
 
 #include <gtest/gtest.h>
 
-template <typename Enum> class ProcessorConcept {
+template <typename> class ProcessorConcept {
 public:
     virtual ~ProcessorConcept() = default;
     virtual void process() = 0;
 };
 
-template <typename Enum, Enum Value>
+template <typename Enum, auto>
 class ProcessorSpec : public ProcessorConcept<Enum> {
 public:
-    void process() override {
-        // Value is available at compile time
-    }
+    void process() override {}
 };
 
 enum class Color {
@@ -28,18 +26,28 @@ enum class Color {
     COLOR_E
 };
 
-TEST(generic_processor, create_provider) {
+TEST(generic_processor, provider) {
 
     InstanceProvider<Color, ProcessorConcept, ProcessorSpec> processors;
+
     processors.addInstance<Color::COLOR_A>();
+    //COLOR_B is intentionnaly not added
     processors.addInstance<Color::COLOR_C>();
     processors.addInstance<Color::COLOR_D, Color::COLOR_E>();
 
-    auto* proc = processors.getInstance(Color::COLOR_A);
+    auto* procA = processors.getInstance(Color::COLOR_A);
+    auto* procB = processors.getInstance(Color::COLOR_B);
+    auto* procC = processors.getInstance(Color::COLOR_C);
+    auto* procD = processors.getInstance(Color::COLOR_D);
+    auto* procE = processors.getInstance(Color::COLOR_E);
 
-    ASSERT_NE(proc, nullptr);
-    proc->process();
+    ASSERT_NE(procA, nullptr);
+    ASSERT_EQ(procB, nullptr);
+    ASSERT_NE(procC, nullptr);
+    ASSERT_NE(procD, nullptr);
+    ASSERT_NE(procE, nullptr);
 
+    procA->process();
 }
 
 

@@ -16,6 +16,11 @@ Describes several implementations of c++ patterns with specific custom features.
     * O(log(N)) search for keys and values
     * removals are longer (logarithmic search then loop on the several matches)
 
+- Instance provider:
+  * provides a way to create and manage templated-generated concrete instances through a common polymorphic base interface
+  * stores the created instances in a map, associated with their enum value, for later retrieval
+  * uses compile-time constraints to ensure the requested instances inputs are correctly defined
+
 - Object pool:
   * fast pool element access by key
   * RAII with unique_ptr
