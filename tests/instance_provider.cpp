@@ -6,13 +6,16 @@
 
 #include <gtest/gtest.h>
 
-template <typename> class ProcessorConcept {
+namespace {
+
+template<typename>
+class ProcessorConcept {
 public:
     virtual ~ProcessorConcept() = default;
     virtual void process() = 0;
 };
 
-template <typename Enum, auto>
+template<typename Enum, auto>
 class ProcessorSpec : public ProcessorConcept<Enum> {
 public:
     void process() override {}
@@ -25,6 +28,8 @@ enum class Color {
     COLOR_D,
     COLOR_E
 };
+
+}
 
 TEST(generic_processor, provider) {
 

@@ -8,6 +8,8 @@
 
 constexpr size_t poolSize = 100;
 
+namespace {
+
 class LargeObject {
 public:
     void reset() { _arr.fill(""); }
@@ -18,6 +20,8 @@ private:
     std::string _name;
     std::array<std::string, 10000> _arr;
 };
+
+}
 
 TEST(object_pool, acquire) {
 

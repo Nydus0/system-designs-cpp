@@ -8,6 +8,8 @@
 #include <gtest/gtest.h>
 #include <string>
 
+namespace {
+
 class Object {
 public:
     explicit Object(std::string name) : _name(move(name)) {}
@@ -18,6 +20,8 @@ private:
     std::string _name;
     std::array<std::string, 10000> _arr;
 };
+
+}
 
 TEST(thread_safe_containers, vector) {
 

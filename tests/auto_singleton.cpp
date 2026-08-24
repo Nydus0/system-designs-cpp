@@ -6,13 +6,17 @@
 
 #include <gtest/gtest.h>
 
+namespace {
+
 class MyService {
 public:
     MyService()  { std::cout << "MyService created\n"; }
     ~MyService() { std::cout << "MyService destroyed\n"; }
 
-    void run() { std::cout << "Running service...\n"; }
+    static void run() { std::cout << "Running service...\n"; }
 };
+
+}
 
 TEST(auto_singleton, create) {
 

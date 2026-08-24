@@ -8,9 +8,9 @@
 
 #include <gtest/gtest.h>
 
-int print_sum(const int a, const int b) { return a + b; }
-int add(const int a, const int b) { return a + b; }
-std::string greet(const std::string& name) { return "Hello, " + name; }
+static int print_sum(const int a, const int b) { return a + b; }
+static int add(const int a, const int b) { return a + b; }
+static std::string greet(const std::string& name) { return "Hello, " + name; }
 
 TEST(thread_pool, Arguments) {
     Arguments args;

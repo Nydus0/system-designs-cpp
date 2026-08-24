@@ -19,7 +19,7 @@ add_library(modules STATIC
         static_factory/Definitions.hpp
         static_factory/Factory.hpp
 
-        #generic processor
+        #instance provider
         instance_provider/InstanceProvider.hpp)
 
 target_include_directories(modules PUBLIC
