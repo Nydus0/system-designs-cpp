@@ -6,7 +6,6 @@ FetchContent_Declare(
 )
 
 # for windows: prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
 # create test executable
@@ -26,7 +25,7 @@ target_link_libraries(tests
         gtest_main
 )
 
-include(googletest)
+include(GoogleTest)
 gtest_discover_tests(tests)
 
 

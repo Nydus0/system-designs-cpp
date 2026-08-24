@@ -21,3 +21,7 @@ add_library(modules STATIC
 
         #generic processor
         generic_processor/InstanceProvider.hpp)
+
+target_include_directories(modules PUBLIC
+        ${PROJECT_SOURCE_DIR}
+)
