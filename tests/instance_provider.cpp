@@ -2,7 +2,7 @@
 // Created by Nydus0 on 21/08/2026.
 //
 
-#include "modules/generic_processor/InstanceProvider.hpp"
+#include "modules/instance_provider/InstanceProvider.hpp"
 
 #include <gtest/gtest.h>
 
